@@ -38,7 +38,9 @@ class Net(nn.Module):
         #after pooling, shape is (20, 53, 53)
         
         # now flatten out the feature vector
-        self.fc1 = nn.Linear(20*53*53, 136)
+        self.fc1 = nn.Linear(20*53*53, 220)
+        
+        self.fc2 = nn.Linear(220, 136)
 
     
         
@@ -50,7 +52,7 @@ class Net(nn.Module):
         x = self.pool(F.relu(self.dropout(self.conv2(x))))
         x = x.view(x.size(0), -1)
         x = F.relu(self.dropout(self.fc1(x)))
-        #x = F.relu(self.fc2(x))
+        x = F.relu(self.fc2(x))
         
         # a modified x, having gone through all the layers of your model, should be returned
         return x
